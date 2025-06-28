@@ -29,6 +29,25 @@
     margin-bottom: 20px;
     color: #ff82d1;
   }
+  .upi-section {
+    background: #1f1f2e;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .upi-id {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ff69b4;
+    user-select: all;
+  }
+  .upi-qr {
+    max-width: 200px;
+    border-radius: 12px;
+    border: 2px solid #ff69b4;
+  }
   label {
     display: block;
     margin-bottom: 6px;
@@ -80,12 +99,43 @@
 <div class="card">
   <div class="title">⛏️ OwO Miner ₹150 Subscription Payment</div>
 
-  <form id="paymentForm" action="https://formspree.io/f/xgvyrnnr" method="POST" enctype="multipart/form-data">
+  <div class="upi-section">
+    <div>Please send ₹150 via UPI to:</div>
+    <div class="upi-id" id="upiId">hakimiwashifali@fam</div>
+    <img
+      class="upi-qr"
+      src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=hakimiwashifali@fam&pn=OwOMiner&am=150"
+      alt="UPI QR Code"
+    />
+    <div style="margin-top:10px; font-size:0.9rem; color:#bbb;">
+      Scan the QR code or copy the UPI ID.<br />
+      Then upload payment screenshot below.
+    </div>
+  </div>
+
+  <form
+    id="paymentForm"
+    action="https://formspree.io/f/xgvyrnnr"
+    method="POST"
+    enctype="multipart/form-data"
+  >
     <label for="username">Discord Username</label>
-    <input type="text" id="username" name="Username" placeholder="e.g. OwO#1234" required>
+    <input
+      type="text"
+      id="username"
+      name="Username"
+      placeholder="e.g. OwO#1234"
+      required
+    />
 
     <label for="paymentScreenshot">Upload Payment Screenshot (₹150 UPI)</label>
-    <input type="file" id="paymentScreenshot" name="PaymentScreenshot" accept="image/*" required>
+    <input
+      type="file"
+      id="paymentScreenshot"
+      name="PaymentScreenshot"
+      accept="image/*"
+      required
+    />
 
     <img id="imgPreview" alt="Screenshot preview" />
 
@@ -113,10 +163,11 @@
     imgPreview.style.display = "block";
   });
 
-  // Show confirmation message on submit (actual success depends on Formspree email)
+  // Show confirmation message on submit (actual success depends on Formspree)
   paymentForm.addEventListener("submit", (e) => {
     formMsg.style.color = "#00ffaa";
-    formMsg.textContent = "✅ Payment screenshot submitted! You will get Elite role after verification.";
+    formMsg.textContent =
+      "✅ Payment screenshot submitted! You will get Elite role after verification.";
   });
 </script>
 
