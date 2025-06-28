@@ -44,7 +44,7 @@
     margin-bottom: 6px;
     color: #bbb;
   }
-  input[type="text"], input[type="file"] {
+  input[type="text"] {
     width: 100%;
     padding: 12px;
     border-radius: 8px;
@@ -68,15 +68,6 @@
   button:hover {
     background: #ff85c1;
   }
-  #imgPreview {
-    max-width: 100%;
-    max-height: 180px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    display: none;
-    object-fit: contain;
-    border: 2px solid #ff69b4;
-  }
   .message {
     font-size: 0.95rem;
     text-align: center;
@@ -99,7 +90,6 @@
     id="paymentForm"
     action="https://formspree.io/f/xgvyrnnr"
     method="POST"
-    enctype="multipart/form-data"
   >
     <label for="username">Discord Username</label>
     <input
@@ -110,46 +100,29 @@
       required
     />
 
-    <label for="paymentScreenshot">Upload Payment Screenshot (₹150 UPI)</label>
+    <label for="utr">Enter UTR / Transaction ID</label>
     <input
-      type="file"
-      id="paymentScreenshot"
-      name="PaymentScreenshot"
-      accept="image/*"
+      type="text"
+      id="utr"
+      name="UTR"
+      placeholder="Enter your payment UTR or transaction ID"
       required
     />
 
-    <img id="imgPreview" alt="Screenshot preview" />
-
-    <button type="submit">Submit Payment Screenshot</button>
+    <button type="submit">Submit Payment Details</button>
   </form>
 
   <div class="message" id="formMsg"></div>
 </div>
 
 <script>
-  const paymentScreenshot = document.getElementById("paymentScreenshot");
-  const imgPreview = document.getElementById("imgPreview");
   const paymentForm = document.getElementById("paymentForm");
   const formMsg = document.getElementById("formMsg");
 
-  // Show image preview when user selects a file
-  paymentScreenshot.addEventListener("change", () => {
-    const file = paymentScreenshot.files[0];
-    if (!file) {
-      imgPreview.style.display = "none";
-      imgPreview.src = "";
-      return;
-    }
-    imgPreview.src = URL.createObjectURL(file);
-    imgPreview.style.display = "block";
-  });
-
-  // Show confirmation message on submit (actual success depends on Formspree)
   paymentForm.addEventListener("submit", (e) => {
     formMsg.style.color = "#00ffaa";
     formMsg.textContent =
-      "✅ Payment screenshot submitted! You will get Elite role after verification.";
+      "✅ Payment details submitted! You will get Elite role after verification.";
   });
 </script>
 
