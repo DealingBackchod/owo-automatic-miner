@@ -2,171 +2,150 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>OwO Cowoncy Miner + Withdraw</title>
+  <title>OwO Cowoncy Auto Miner</title>
   <style>
     body {
-      background-color: #181a23;
-      font-family: 'Comic Sans MS', cursive;
+      margin: 0;
+      background: #1a1a2e;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
       display: flex;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 50px 20px;
     }
 
-    .container {
-      background: #2f3136;
+    .card {
+      background: #252836;
       padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px #ff69b455;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.2);
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .title {
       text-align: center;
-      max-width: 430px;
-      width: 90%;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #ff82d1;
     }
 
-    h1 {
-      color: #ff90d0;
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-    }
-
-    #mineButton, #withdrawButton {
-      background-color: #ff69b4;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1.2rem;
-      border-radius: 12px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    #mineButton:hover, #withdrawButton:hover {
-      background-color: #ff85c1;
-    }
-
-    #mineButton:active, #withdrawButton:active {
-      transform: scale(0.95);
-    }
-
-    #result {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      color: #ffb3f3;
-      min-height: 25px;
-    }
-
-    #balance {
+    .balance {
       font-size: 1.5rem;
-      margin-top: 15px;
+      text-align: center;
       color: #00ffc8;
+      margin-bottom: 15px;
     }
 
-    .pickaxe {
-      margin: 30px auto 15px;
-      width: 80px;
-      height: 80px;
-      background: url('https://i.postimg.cc/1tDtNrj6/pickaxe.png') no-repeat center;
-      background-size: contain;
-      animation: swing 1s linear infinite paused;
+    .status {
+      text-align: center;
+      margin: 10px 0 30px;
+      font-size: 1rem;
+      color: #ccc;
     }
 
-    .mining .pickaxe {
-      animation-play-state: running;
+    .divider {
+      height: 1px;
+      background: #444;
+      margin: 30px 0;
     }
 
-    @keyframes swing {
-      0% { transform: rotate(0deg); }
-      50% { transform: rotate(-25deg); }
-      100% { transform: rotate(0deg); }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #bbb;
     }
 
     input {
-      padding: 10px;
+      width: 100%;
+      padding: 12px;
       border-radius: 8px;
       border: none;
-      margin-top: 10px;
-      width: 90%;
+      margin-bottom: 15px;
       font-size: 1rem;
-      text-align: center;
     }
 
-    .notice {
-      color: #ffaaaa;
-      font-size: 0.9rem;
-      margin-top: 10px;
+    button {
+      background: #ff69b4;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background: #ff85c1;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-size: 0.95rem;
+    }
+
+    .success {
+      color: #00ffa6;
+    }
+
+    .error {
+      color: #ff8080;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>⛏️ OwO Cowoncy Miner</h1>
-    <div class="pickaxe" id="pickaxe"></div>
-    <button id="mineButton">Mine Cowoncy</button>
-    <div id="result">Click to earn Cowoncy!</div>
-    <div id="balance">💰 Cowoncy: <span id="coins">0</span></div>
+  <div class="card">
+    <div class="title">⛏️ OwO Auto Miner</div>
+    <div class="balance">💰 Cowoncy: <span id="cowoncy">0</span></div>
+    <div class="status">Mining 500 Cowoncy every second...</div>
 
-    <hr style="margin: 25px 0; border-color: #444;">
+    <div class="divider"></div>
 
-    <h2 style="color:#ff90d0;">📤 Withdraw</h2>
-    <input type="text" id="discordUsername" placeholder="Enter Discord username (e.g. OwO#1234)">
-    <div class="notice">Minimum withdrawal: 10,000,000 Cowoncy</div>
-    <button id="withdrawButton">Request Withdraw</button>
-    <div id="withdrawStatus" style="margin-top: 10px;"></div>
+    <label for="username">Discord Username</label>
+    <input type="text" id="username" placeholder="e.g. OwO#1234">
 
-    <audio id="mineSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_c20cf7c23e.mp3" preload="auto"></audio>
+    <button id="withdrawBtn">Withdraw</button>
+    <div id="withdrawMsg" class="message"></div>
   </div>
 
   <script>
-    const mineBtn = document.getElementById('mineButton');
-    const withdrawBtn = document.getElementById('withdrawButton');
-    const result = document.getElementById('result');
-    const coinsDisplay = document.getElementById('coins');
-    const pickaxe = document.getElementById('pickaxe');
-    const mineSound = document.getElementById('mineSound');
-    const withdrawStatus = document.getElementById('withdrawStatus');
-    const discordUsername = document.getElementById('discordUsername');
+    let cowoncy = 0;
+    const cowoncyPerSecond = 500;
+    const cowoncyDisplay = document.getElementById("cowoncy");
+    const withdrawBtn = document.getElementById("withdrawBtn");
+    const withdrawMsg = document.getElementById("withdrawMsg");
 
-    let coins = 0;
-    const rewardPerClick = 20;
-    const minWithdraw = 10000000;
+    // Auto mining logic
+    setInterval(() => {
+      cowoncy += cowoncyPerSecond;
+      cowoncyDisplay.textContent = cowoncy.toLocaleString();
+    }, 1000);
 
-    mineBtn.addEventListener('click', () => {
-      pickaxe.parentElement.classList.add('mining');
-      mineBtn.disabled = true;
+    withdrawBtn.addEventListener("click", () => {
+      const username = document.getElementById("username").value.trim();
 
-      setTimeout(() => {
-        coins += rewardPerClick;
-        coinsDisplay.textContent = coins.toLocaleString();
-        result.textContent = `+${rewardPerClick} Cowoncy! UwU`;
-        mineSound.currentTime = 0;
-        mineSound.play();
-        pickaxe.parentElement.classList.remove('mining');
-        mineBtn.disabled = false;
-      }, 700);
-    });
-
-    withdrawBtn.addEventListener('click', () => {
-      const user = discordUsername.value.trim();
-      withdrawStatus.style.color = "#ff5555";
-
-      if (user === "") {
-        withdrawStatus.textContent = "⚠️ Please enter your Discord username!";
+      if (username === "") {
+        withdrawMsg.textContent = "⚠️ Please enter your Discord username!";
+        withdrawMsg.className = "message error";
         return;
       }
 
-      if (coins < minWithdraw) {
-        withdrawStatus.textContent = "❌ Not enough Cowoncy! Minimum is 10,000,000.";
+      if (cowoncy < 10000000) {
+        withdrawMsg.textContent = "❌ You need at least 10,000,000 Cowoncy to withdraw!";
+        withdrawMsg.className = "message error";
         return;
       }
 
-      withdrawStatus.style.color = "#00ffae";
-      withdrawStatus.textContent = `✅ Withdraw request sent for ${coins.toLocaleString()} Cowoncy to ${user}`;
+      withdrawMsg.textContent = `✅ Withdraw request submitted for ${cowoncy.toLocaleString()} Cowoncy to ${username}`;
+      withdrawMsg.className = "message success";
 
-      // Optional: Reset balance after withdrawal
-      // coins = 0;
-      // coinsDisplay.textContent = coins;
+      // Optional reset after withdrawal
+      // cowoncy = 0;
+      // cowoncyDisplay.textContent = cowoncy;
     });
   </script>
 
