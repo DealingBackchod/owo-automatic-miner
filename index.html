@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>OwO Cowoncy Auto Miner</title>
+  <meta charset="UTF-8" />
+  <title>OwO Miner ₹150 Monthly Subscription</title>
   <style>
     body {
-      margin: 0;
-      background: #1a1a2e;
+      background-color: #1a1a2e;
       font-family: 'Segoe UI', sans-serif;
       color: #fff;
       display: flex;
@@ -15,7 +14,6 @@
       min-height: 100vh;
       padding: 50px 20px;
     }
-
     .card {
       background: #252836;
       padding: 40px;
@@ -23,41 +21,36 @@
       box-shadow: 0 0 25px rgba(255, 105, 180, 0.2);
       max-width: 500px;
       width: 100%;
+      position: relative;
     }
-
     .title {
       text-align: center;
       font-size: 2rem;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       color: #ff82d1;
     }
-
     .balance {
       font-size: 1.5rem;
       text-align: center;
       color: #00ffc8;
       margin-bottom: 15px;
     }
-
     .status {
       text-align: center;
-      margin: 10px 0 30px;
       font-size: 1rem;
       color: #ccc;
+      margin-bottom: 20px;
     }
-
     .divider {
       height: 1px;
       background: #444;
-      margin: 30px 0;
+      margin: 25px 0;
     }
-
     label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       color: #bbb;
     }
-
     input {
       width: 100%;
       padding: 12px;
@@ -66,7 +59,6 @@
       margin-bottom: 15px;
       font-size: 1rem;
     }
-
     button {
       background: #ff69b4;
       color: white;
@@ -77,36 +69,61 @@
       cursor: pointer;
       width: 100%;
     }
-
     button:hover {
       background: #ff85c1;
     }
-
-    .message {
-      margin-top: 15px;
+    .upi-box {
+      background: #1f1f2e;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      color: #fff;
       font-size: 0.95rem;
+      display: block;
+      text-align: center;
     }
-
-    .success {
+    .message {
+      font-size: 0.95rem;
+      text-align: center;
       color: #00ffa6;
+      margin-top: 10px;
     }
-
-    .error {
-      color: #ff8080;
+    .elite-tag {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: #ff69b4;
+      color: white;
+      padding: 6px 15px;
+      font-weight: bold;
+      border-radius: 50px;
+      font-size: 1rem;
+      user-select: none;
+      display: none;
     }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <div class="title">⛏️ OwO Auto Miner</div>
+    <div class="elite-tag" id="eliteTag">Elite</div>
+    <div class="title">⛏️ OwO Miner ₹150 Monthly Subscription</div>
+
     <div class="balance">💰 Cowoncy: <span id="cowoncy">0</span></div>
-    <div class="status">Mining 500 Cowoncy every second...</div>
+    <div class="status" id="statusText">Mining 500 Cowoncy per second (Free Plan)</div>
+
+    <div class="upi-box" id="upiBox">
+      <b>Send ₹150 monthly payment to:</b><br>
+      <code>hakimiwashifali@fam</code><br><br>
+      After payment, click below to get Elite badge!
+      <br><br>
+      <button id="confirmPayment">I’ve Paid</button>
+    </div>
 
     <div class="divider"></div>
 
     <label for="username">Discord Username</label>
-    <input type="text" id="username" placeholder="e.g. OwO#1234">
+    <input type="text" id="username" placeholder="e.g. OwO#1234" required>
 
     <button id="withdrawBtn">Withdraw</button>
     <div id="withdrawMsg" class="message"></div>
@@ -114,36 +131,49 @@
 
   <script>
     let cowoncy = 0;
-    const cowoncyPerSecond = 500;
+    const rate = 500; // constant speed
+
     const cowoncyDisplay = document.getElementById("cowoncy");
+    const statusText = document.getElementById("statusText");
+    const upiBox = document.getElementById("upiBox");
+    const confirmPaymentBtn = document.getElementById("confirmPayment");
     const withdrawBtn = document.getElementById("withdrawBtn");
     const withdrawMsg = document.getElementById("withdrawMsg");
+    const eliteTag = document.getElementById("eliteTag");
 
-    // Auto mining logic
+    // Auto mine
     setInterval(() => {
-      cowoncy += cowoncyPerSecond;
+      cowoncy += rate;
       cowoncyDisplay.textContent = cowoncy.toLocaleString();
     }, 1000);
 
+    // Confirm payment unlocks Elite badge
+    confirmPaymentBtn.addEventListener("click", () => {
+      eliteTag.style.display = "inline-block";
+      upiBox.style.display = "none";
+      statusText.textContent = "Mining 500 Cowoncy per second (Elite Member)";
+    });
+
+    // Withdraw logic
     withdrawBtn.addEventListener("click", () => {
       const username = document.getElementById("username").value.trim();
 
-      if (username === "") {
+      if (!username) {
         withdrawMsg.textContent = "⚠️ Please enter your Discord username!";
-        withdrawMsg.className = "message error";
+        withdrawMsg.style.color = "#ff5555";
         return;
       }
 
       if (cowoncy < 10000000) {
-        withdrawMsg.textContent = "❌ You need at least 10,000,000 Cowoncy to withdraw!";
-        withdrawMsg.className = "message error";
+        withdrawMsg.textContent = "❌ Minimum withdrawal is 10,000,000 Cowoncy!";
+        withdrawMsg.style.color = "#ff5555";
         return;
       }
 
-      withdrawMsg.textContent = `✅ Withdraw request submitted for ${cowoncy.toLocaleString()} Cowoncy to ${username}`;
-      withdrawMsg.className = "message success";
+      withdrawMsg.textContent = `✅ Withdrawal requested for ${cowoncy.toLocaleString()} Cowoncy to ${username}`;
+      withdrawMsg.style.color = "#00ffaa";
 
-      // Optional reset after withdrawal
+      // Optional: reset balance after withdraw
       // cowoncy = 0;
       // cowoncyDisplay.textContent = cowoncy;
     });
