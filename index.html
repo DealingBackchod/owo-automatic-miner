@@ -35,18 +35,9 @@
     padding: 20px;
     text-align: center;
     margin-bottom: 30px;
-  }
-  .upi-id {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 15px;
+    font-size: 1.1rem;
     color: #ff69b4;
     user-select: all;
-  }
-  .upi-qr {
-    max-width: 200px;
-    border-radius: 12px;
-    border: 2px solid #ff69b4;
   }
   label {
     display: block;
@@ -99,18 +90,9 @@
 <div class="card">
   <div class="title">⛏️ OwO Miner ₹150 Subscription Payment</div>
 
-  <div class="upi-section">
-    <div>Please send ₹150 via UPI to:</div>
-    <div class="upi-id" id="upiId">hakimiwashifali@fam</div>
-    <img
-      class="upi-qr"
-      src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=hakimiwashifali@fam&pn=OwOMiner&am=150"
-      alt="UPI QR Code"
-    />
-    <div style="margin-top:10px; font-size:0.9rem; color:#bbb;">
-      Scan the QR code or copy the UPI ID.<br />
-      Then upload payment screenshot below.
-    </div>
+  <div class="upi-section" title="Copy UPI ID">
+    Please send ₹150 via UPI to:<br />
+    <strong id="upiId">hakimiwashifali@fam</strong>
   </div>
 
   <form
