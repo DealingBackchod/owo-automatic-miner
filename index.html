@@ -1,183 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>OwO Miner ₹150 Monthly Subscription</title>
-  <style>
-    body {
-      background-color: #1a1a2e;
-      font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 50px 20px;
-    }
-    .card {
-      background: #252836;
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 0 25px rgba(255, 105, 180, 0.2);
-      max-width: 500px;
-      width: 100%;
-      position: relative;
-    }
-    .title {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: #ff82d1;
-    }
-    .balance {
-      font-size: 1.5rem;
-      text-align: center;
-      color: #00ffc8;
-      margin-bottom: 15px;
-    }
-    .status {
-      text-align: center;
-      font-size: 1rem;
-      color: #ccc;
-      margin-bottom: 20px;
-    }
-    .divider {
-      height: 1px;
-      background: #444;
-      margin: 25px 0;
-    }
-    label {
-      display: block;
-      margin-bottom: 6px;
-      color: #bbb;
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      margin-bottom: 15px;
-      font-size: 1rem;
-    }
-    button {
-      background: #ff69b4;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      font-size: 1.1rem;
-      border-radius: 10px;
-      cursor: pointer;
-      width: 100%;
-    }
-    button:hover {
-      background: #ff85c1;
-    }
-    .upi-box {
-      background: #1f1f2e;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 0.95rem;
-      display: block;
-      text-align: center;
-    }
-    .message {
-      font-size: 0.95rem;
-      text-align: center;
-      color: #00ffa6;
-      margin-top: 10px;
-    }
-    .elite-tag {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      background: #ff69b4;
-      color: white;
-      padding: 6px 15px;
-      font-weight: bold;
-      border-radius: 50px;
-      font-size: 1rem;
-      user-select: none;
-      display: none;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OwO Miner ₹150 Subscription Payment</title>
+<style>
+  body {
+    background-color: #1a1a2e;
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .card {
+    background: #252836;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(255, 105, 180, 0.2);
+    max-width: 500px;
+    width: 100%;
+  }
+  .title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ff82d1;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    color: #bbb;
+  }
+  input[type="text"], input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    background: #1a1a2e;
+    color: #eee;
+  }
+  button {
+    background: #ff69b4;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  button:hover {
+    background: #ff85c1;
+  }
+  #imgPreview {
+    max-width: 100%;
+    max-height: 180px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: none;
+    object-fit: contain;
+    border: 2px solid #ff69b4;
+  }
+  .message {
+    font-size: 0.95rem;
+    text-align: center;
+    margin-top: 10px;
+    color: #00ffaa;
+  }
+</style>
 </head>
 <body>
 
-  <div class="card">
-    <div class="elite-tag" id="eliteTag">Elite</div>
-    <div class="title">⛏️ OwO Miner ₹150 Monthly Subscription</div>
+<div class="card">
+  <div class="title">⛏️ OwO Miner ₹150 Subscription Payment</div>
 
-    <div class="balance">💰 Cowoncy: <span id="cowoncy">0</span></div>
-    <div class="status" id="statusText">Mining 500 Cowoncy per second (Free Plan)</div>
-
-    <div class="upi-box" id="upiBox">
-      <b>Send ₹150 monthly payment to:</b><br>
-      <code>hakimiwashifali@fam</code><br><br>
-      After payment, click below to get Elite badge!
-      <br><br>
-      <button id="confirmPayment">I’ve Paid</button>
-    </div>
-
-    <div class="divider"></div>
-
+  <form id="paymentForm" action="https://formspree.io/f/xgvyrnnr" method="POST" enctype="multipart/form-data">
     <label for="username">Discord Username</label>
-    <input type="text" id="username" placeholder="e.g. OwO#1234" required>
+    <input type="text" id="username" name="Username" placeholder="e.g. OwO#1234" required>
 
-    <button id="withdrawBtn">Withdraw</button>
-    <div id="withdrawMsg" class="message"></div>
-  </div>
+    <label for="paymentScreenshot">Upload Payment Screenshot (₹150 UPI)</label>
+    <input type="file" id="paymentScreenshot" name="PaymentScreenshot" accept="image/*" required>
 
-  <script>
-    let cowoncy = 0;
-    const rate = 500; // constant speed
+    <img id="imgPreview" alt="Screenshot preview" />
 
-    const cowoncyDisplay = document.getElementById("cowoncy");
-    const statusText = document.getElementById("statusText");
-    const upiBox = document.getElementById("upiBox");
-    const confirmPaymentBtn = document.getElementById("confirmPayment");
-    const withdrawBtn = document.getElementById("withdrawBtn");
-    const withdrawMsg = document.getElementById("withdrawMsg");
-    const eliteTag = document.getElementById("eliteTag");
+    <button type="submit">Submit Payment Screenshot</button>
+  </form>
 
-    // Auto mine
-    setInterval(() => {
-      cowoncy += rate;
-      cowoncyDisplay.textContent = cowoncy.toLocaleString();
-    }, 1000);
+  <div class="message" id="formMsg"></div>
+</div>
 
-    // Confirm payment unlocks Elite badge
-    confirmPaymentBtn.addEventListener("click", () => {
-      eliteTag.style.display = "inline-block";
-      upiBox.style.display = "none";
-      statusText.textContent = "Mining 500 Cowoncy per second (Elite Member)";
-    });
+<script>
+  const paymentScreenshot = document.getElementById("paymentScreenshot");
+  const imgPreview = document.getElementById("imgPreview");
+  const paymentForm = document.getElementById("paymentForm");
+  const formMsg = document.getElementById("formMsg");
 
-    // Withdraw logic
-    withdrawBtn.addEventListener("click", () => {
-      const username = document.getElementById("username").value.trim();
+  // Show image preview when user selects a file
+  paymentScreenshot.addEventListener("change", () => {
+    const file = paymentScreenshot.files[0];
+    if (!file) {
+      imgPreview.style.display = "none";
+      imgPreview.src = "";
+      return;
+    }
+    imgPreview.src = URL.createObjectURL(file);
+    imgPreview.style.display = "block";
+  });
 
-      if (!username) {
-        withdrawMsg.textContent = "⚠️ Please enter your Discord username!";
-        withdrawMsg.style.color = "#ff5555";
-        return;
-      }
-
-      if (cowoncy < 10000000) {
-        withdrawMsg.textContent = "❌ Minimum withdrawal is 10,000,000 Cowoncy!";
-        withdrawMsg.style.color = "#ff5555";
-        return;
-      }
-
-      withdrawMsg.textContent = `✅ Withdrawal requested for ${cowoncy.toLocaleString()} Cowoncy to ${username}`;
-      withdrawMsg.style.color = "#00ffaa";
-
-      // Optional: reset balance after withdraw
-      // cowoncy = 0;
-      // cowoncyDisplay.textContent = cowoncy;
-    });
-  </script>
+  // Show confirmation message on submit (actual success depends on Formspree email)
+  paymentForm.addEventListener("submit", (e) => {
+    formMsg.style.color = "#00ffaa";
+    formMsg.textContent = "✅ Payment screenshot submitted! You will get Elite role after verification.";
+  });
+</script>
 
 </body>
 </html>
